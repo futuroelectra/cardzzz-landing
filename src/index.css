@@ -1,0 +1,593 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Roundo';
+  src: url('../Roundo-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../Satoshi-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Satoshi', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll on mobile */
+  max-width: 100vw;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  /* Prevent horizontal overflow */
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Legal Pages Styling */
+.legal-page ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.legal-page li {
+  margin-bottom: 0.5rem;
+}
+
+.legal-page a {
+  color: #FFFADC;
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+
+.legal-page a:hover {
+  opacity: 0.8;
+}
+
+.legal-page button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Responsive improvements for mobile */
+@media (max-width: 640px) {
+  /* Reduce animation complexity on mobile for better performance */
+  .animated-gradient-button .wrapper .circle {
+    will-change: transform;
+  }
+  
+  /* Optimize backdrop filter on mobile */
+  .glass-input {
+    backdrop-filter: url(#frosted) blur(8px);
+    -webkit-backdrop-filter: url(#frosted) blur(8px);
+  }
+  
+  .glass-input:hover,
+  .glass-input:focus {
+    backdrop-filter: url(#frosted) blur(10px);
+    -webkit-backdrop-filter: url(#frosted) blur(10px);
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .glass-input {
+    backdrop-filter: url(#frosted) blur(9px);
+    -webkit-backdrop-filter: url(#frosted) blur(9px);
+  }
+}
+
+/* Tagline vertical alignment */
+.tagline-text {
+  vertical-align: middle;
+}
+
+.tagline-date {
+  vertical-align: middle;
+}
+
+/* Glass Input Container */
+.glass-input-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Glass Input Field - Liquid Glass Effect with Specular Light Refraction */
+.glass-input {
+  position: relative;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid transparent;
+  backdrop-filter: url(#frosted) blur(10px);
+  -webkit-backdrop-filter: url(#frosted) blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  min-height: 54px;
+  /* Ensure minimum touch target size on mobile (44px recommended) */
+  min-height: 44px;
+  color: #FFFADC !important;
+  outline: none;
+  /* Specular light refraction - inner highlight and outer glow */
+  box-shadow: 
+    inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  /* Improve mobile input experience */
+  -webkit-appearance: none;
+  appearance: none;
+  font-size: 16px; /* Prevents zoom on iOS */
+}
+
+@media (min-width: 768px) {
+  .glass-input {
+    min-height: 54px;
+    font-size: inherit;
+  }
+}
+
+/* Gradient border using pseudo-element for specular light effect */
+.glass-input::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 30px;
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Responsive border radius for smaller screens */
+@media (max-width: 640px) {
+  .glass-input {
+    border-radius: 24px;
+  }
+  
+  .glass-input::before {
+    border-radius: 24px;
+  }
+}
+
+/* Ensure text and placeholder are visible */
+.glass-input::placeholder {
+  color: #8C8C8C !important;
+  opacity: 1;
+}
+
+.glass-input:hover {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: url(#frosted) blur(12px);
+  -webkit-backdrop-filter: url(#frosted) blur(12px);
+  box-shadow: 
+    inset 1px 1px 2px rgba(255, 255, 255, 0.4),
+    0 24px 48px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.glass-input:hover::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.15) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: url(#frosted) blur(15px);
+  -webkit-backdrop-filter: url(#frosted) blur(15px);
+  box-shadow: 
+    inset 1px 1px 3px rgba(255, 255, 255, 0.5),
+    0 28px 56px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.glass-input:focus::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.2) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+}
+
+
+/* Button Base Styles - Ensure consistent sizing */
+button[type="submit"] {
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Inactive button state - ensure 100% opacity */
+button.bg-\[#FFFADC\] {
+  background-color: #FFFADC;
+  opacity: 1;
+}
+
+button.bg-\[#FFFADC\]:disabled {
+  opacity: 1;
+}
+
+/* Animated Gradient Button - Active State */
+.animated-gradient-button {
+  --duration: 7s;
+  --easing: linear;
+  --c-color-1: rgba(34, 0, 32, 0.75);
+  --c-color-2: rgba(86, 0, 0, 0.7);
+  --c-color-3: rgba(255, 250, 220, 0.9);
+  --c-color-4: rgba(255, 255, 255, 1);
+  --c-shadow: rgba(255, 250, 220, 0.5);
+  --c-shadow-inset-top: rgba(255, 255, 255, 0.9);
+  --c-shadow-inset-bottom: rgba(255, 250, 220, 0.8);
+  --c-radial-inner: #FFFADC;
+  --c-radial-outer: #FFFADC;
+  --c-color: #560000;
+  
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  outline: none;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  border-radius: 24px;
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--c-color);
+  background: radial-gradient(circle, var(--c-radial-inner), var(--c-radial-outer) 80%);
+  box-shadow: 0 0 14px var(--c-shadow);
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  /* Ensure minimum touch target size on mobile */
+  min-height: 44px;
+}
+
+@media (min-width: 768px) {
+  .animated-gradient-button {
+    font-size: 20px;
+  }
+}
+
+
+.animated-gradient-button:before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 24px;
+  box-shadow: inset 0 3px 12px var(--c-shadow-inset-top), inset 0 -3px 4px var(--c-shadow-inset-bottom);
+}
+
+.animated-gradient-button .wrapper {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  overflow: hidden;
+  border-radius: 24px;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.animated-gradient-button .wrapper > * {
+  pointer-events: auto;
+}
+
+.animated-gradient-button .wrapper .button-text {
+  display: inline-block;
+  position: relative;
+  z-index: 10;
+  color: #560000;
+  opacity: 1;
+}
+
+.button-text-inactive {
+  display: inline-block;
+  color: #560000;
+  opacity: 1;
+}
+
+.button-text-hidden {
+  visibility: hidden;
+  display: inline-block;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.animated-gradient-button .wrapper .circle {
+  position: absolute;
+  left: var(--x, 0);
+  top: var(--y, 0);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  filter: blur(var(--blur, 12px));
+  background: var(--background, transparent);
+  transform: translate(-50%, -50%) translateZ(0);
+  animation: var(--animation, none) var(--duration) var(--easing) infinite;
+  pointer-events: none;
+}
+
+.animated-gradient-button .wrapper .circle.circle-1, 
+.animated-gradient-button .wrapper .circle.circle-9, 
+.animated-gradient-button .wrapper .circle.circle-10 {
+  --background: var(--c-color-4);
+  --blur: 12px;
+}
+
+.animated-gradient-button .wrapper .circle.circle-3, 
+.animated-gradient-button .wrapper .circle.circle-4 {
+  --background: var(--c-color-2);
+  --blur: 18px;
+}
+
+.animated-gradient-button .wrapper .circle.circle-5, 
+.animated-gradient-button .wrapper .circle.circle-6 {
+  --background: var(--c-color-3);
+  --blur: 14px;
+}
+
+.animated-gradient-button .wrapper .circle.circle-2, 
+.animated-gradient-button .wrapper .circle.circle-7, 
+.animated-gradient-button .wrapper .circle.circle-8, 
+.animated-gradient-button .wrapper .circle.circle-11, 
+.animated-gradient-button .wrapper .circle.circle-12 {
+  --background: var(--c-color-1);
+  --blur: 16px;
+}
+
+.animated-gradient-button .wrapper .circle.circle-1 {
+  --x: 0%;
+  --y: 20%;
+  --animation: circle-1;
+}
+
+.animated-gradient-button .wrapper .circle.circle-2 {
+  --x: 25%;
+  --y: 50%;
+  --animation: circle-2;
+}
+
+.animated-gradient-button .wrapper .circle.circle-3 {
+  --x: 5%;
+  --y: 30%;
+  --animation: circle-3;
+}
+
+.animated-gradient-button .wrapper .circle.circle-4 {
+  --x: 75%;
+  --y: 35%;
+  --animation: circle-4;
+}
+
+.animated-gradient-button .wrapper .circle.circle-5 {
+  --x: 50%;
+  --y: 50%;
+  --animation: circle-5;
+}
+
+.animated-gradient-button .wrapper .circle.circle-6 {
+  --x: 15%;
+  --y: 70%;
+  --animation: circle-6;
+}
+
+.animated-gradient-button .wrapper .circle.circle-7 {
+  --x: 85%;
+  --y: 60%;
+  --animation: circle-7;
+}
+
+.animated-gradient-button .wrapper .circle.circle-8 {
+  --x: 35%;
+  --y: 45%;
+  --animation: circle-8;
+}
+
+.animated-gradient-button .wrapper .circle.circle-9 {
+  --x: 65%;
+  --y: 30%;
+  --animation: circle-9;
+}
+
+.animated-gradient-button .wrapper .circle.circle-10 {
+  --x: 45%;
+  --y: 65%;
+  --animation: circle-10;
+}
+
+.animated-gradient-button .wrapper .circle.circle-11 {
+  --x: 10%;
+  --y: 50%;
+  --animation: circle-11;
+}
+
+.animated-gradient-button .wrapper .circle.circle-12 {
+  --blur: 16px;
+  --x: 90%;
+  --y: 50%;
+  --animation: circle-12;
+}
+
+@keyframes circle-1 {
+  33% {
+    left: 10%;
+    top: 40%;
+  }
+  66% {
+    left: 20%;
+    top: 80%;
+  }
+}
+
+@keyframes circle-2 {
+  33% {
+    left: 40%;
+    top: 30%;
+  }
+  66% {
+    left: 10%;
+    top: 10%;
+  }
+}
+
+@keyframes circle-3 {
+  33% {
+    left: 15%;
+    top: 50%;
+  }
+  66% {
+    left: 8%;
+    top: 45%;
+  }
+}
+
+@keyframes circle-4 {
+  33% {
+    left: 70%;
+    top: 25%;
+  }
+  66% {
+    left: 95%;
+    top: 30%;
+  }
+}
+
+@keyframes circle-5 {
+  33% {
+    left: 70%;
+    top: 70%;
+  }
+  66% {
+    left: 30%;
+    top: 20%;
+  }
+}
+
+@keyframes circle-6 {
+  33% {
+    left: 25%;
+    top: 50%;
+  }
+  66% {
+    left: 60%;
+    top: 10%;
+  }
+}
+
+@keyframes circle-7 {
+  33% {
+    left: 80%;
+    top: 75%;
+  }
+  66% {
+    left: 60%;
+    top: 5%;
+  }
+}
+
+@keyframes circle-8 {
+  33% {
+    left: 45%;
+    top: 40%;
+  }
+  66% {
+    left: 60%;
+    top: 30%;
+  }
+}
+
+@keyframes circle-9 {
+  33% {
+    left: 50%;
+    top: 25%;
+  }
+  66% {
+    left: 90%;
+    top: 30%;
+  }
+}
+
+@keyframes circle-10 {
+  33% {
+    left: 60%;
+    top: 80%;
+  }
+  66% {
+    left: 85%;
+    top: 85%;
+  }
+}
+
+@keyframes circle-11 {
+  33% {
+    left: 15%;
+    top: 55%;
+  }
+  66% {
+    left: 60%;
+    top: 70%;
+  }
+}
+
+@keyframes circle-12 {
+  33% {
+    left: 80%;
+    top: 45%;
+  }
+  66% {
+    left: 85%;
+    top: 20%;
+  }
+}
