@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const phrases = [
@@ -10,28 +10,75 @@ const phrases = [
 function Loader({ onComplete }) {
   const [currentPhrase, setCurrentPhrase] = useState(0)
   const [isExiting, setIsExiting] = useState(false)
+  const phraseIntervalRef = useRef(null)
+  const checkReadyIntervalRef = useRef(null)
 
   useEffect(() => {
-    // Cycle through phrases
-    const phraseInterval = setInterval(() => {
+    let mounted = true
+
+    // Check if site is ready
+    const checkSiteReady = () => {
+      // Check if fonts are loaded
+      const fontsReady = document.fonts?.status === 'loaded' || 
+                        (document.fonts?.check('1em Roundo') && document.fonts?.check('1em Satoshi'))
+      
+      // Check if root content is rendered
+      const rootReady = document.getElementById('root')?.children.length > 0
+      
+      return fontsReady && rootReady
+    }
+
+    // Minimum display time to show at least first phrase
+    const minDisplayTime = 1500
+    const startTime = Date.now()
+
+    // Check for readiness periodically
+    checkReadyIntervalRef.current = setInterval(() => {
+      if (!mounted || isExiting) return
+      
+      const elapsed = Date.now() - startTime
+      
+      // Only exit after minimum time and when site is ready
+      if (elapsed >= minDisplayTime && checkSiteReady()) {
+        // Site is ready, exit immediately
+        if (phraseIntervalRef.current) {
+          clearInterval(phraseIntervalRef.current)
+        }
+        clearInterval(checkReadyIntervalRef.current)
+        setIsExiting(true)
+        setTimeout(() => {
+          onComplete()
+        }, 800)
+      }
+    }, 100)
+
+    // Cycle through phrases (will be interrupted if site loads early)
+    phraseIntervalRef.current = setInterval(() => {
+      if (!mounted || isExiting) return
+      
       setCurrentPhrase((prev) => {
         if (prev < phrases.length - 1) {
           return prev + 1
         } else {
-          // After last phrase, start exit animation
-          clearInterval(phraseInterval)
-          setIsExiting(true)
-          // Wait for exit animation, then call onComplete
-          setTimeout(() => {
-            onComplete()
-          }, 800) // Match exit animation duration
+          // After last phrase, exit if not already exiting
+          if (!isExiting) {
+            clearInterval(phraseIntervalRef.current)
+            setIsExiting(true)
+            setTimeout(() => {
+              onComplete()
+            }, 800)
+          }
           return prev
         }
       })
-    }, 2000) // Each phrase shows for 2s, total ~6s
+    }, 2000)
 
-    return () => clearInterval(phraseInterval)
-  }, []) // Remove dependencies to prevent re-runs
+    return () => {
+      mounted = false
+      if (phraseIntervalRef.current) clearInterval(phraseIntervalRef.current)
+      if (checkReadyIntervalRef.current) clearInterval(checkReadyIntervalRef.current)
+    }
+  }, [isExiting, onComplete])
 
   return (
     <motion.div
@@ -52,7 +99,7 @@ function Loader({ onComplete }) {
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, filter: 'blur(10px)' }}
             transition={{ duration: 0.6, ease: 'easeInOut' }}
-            className="font-roundo text-cream lowercase font-medium text-xl sm:text-2xl md:text-3xl"
+            className="font-roundo text-cream lowercase font-medium text-base sm:text-lg md:text-xl"
           >
             {phrases[currentPhrase]}
           </motion.h1>
