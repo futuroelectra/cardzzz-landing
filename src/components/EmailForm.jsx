@@ -154,7 +154,7 @@ function EmailForm({ onNavigateToPrivacy, onNavigateToTerms }) {
           value={email}
           onChange={handleEmailChange}
           placeholder="Email"
-          className="glass-input w-full px-4 py-3 md:px-6 md:py-4 rounded-[24px] md:rounded-[30px] font-roundo text-sm md:text-base text-cream placeholder:text-[#8C8C8C] focus:outline-none"
+          className="glass-input w-full px-4 py-3 md:px-6 md:py-4 rounded-[24px] md:rounded-[30px] font-satoshi text-sm md:text-base text-cream placeholder:text-[#8C8C8C] focus:outline-none"
         />
       </motion.div>
 
