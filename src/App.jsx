@@ -1,16 +1,44 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Logo from './components/Logo'
 import LiquidBlobs from './components/LiquidBlobs'
 import EmailForm from './components/EmailForm'
 import PrivacyPolicy from './components/PrivacyPolicy'
 import TermsOfService from './components/TermsOfService'
+import Loader from './components/Loader'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home')
+  const [showLoader, setShowLoader] = useState(false)
+  const [loaderComplete, setLoaderComplete] = useState(false)
 
   const handleBack = () => {
     setCurrentPage('home')
+  }
+
+  // Check sessionStorage on mount
+  useEffect(() => {
+    if (!sessionStorage.getItem('visited')) {
+      setShowLoader(true)
+      sessionStorage.setItem('visited', 'true')
+    } else {
+      setLoaderComplete(true)
+    }
+  }, [])
+
+  const handleLoaderComplete = () => {
+    setShowLoader(false)
+    setLoaderComplete(true)
+  }
+
+  // Show loader on first visit
+  if (showLoader) {
+    return <Loader onComplete={handleLoaderComplete} />
+  }
+
+  // Prevent FOUC - hide content until loader is complete
+  if (!loaderComplete) {
+    return null
   }
 
   if (currentPage === 'privacy') {
