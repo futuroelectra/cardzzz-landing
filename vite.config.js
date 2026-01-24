@@ -4,7 +4,9 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // Use relative paths for GitHub Pages deployment
+  // Use '/' for root domain deployment (cardzzz.com)
+  // Vite will handle path transformation automatically during build
+  base: '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
