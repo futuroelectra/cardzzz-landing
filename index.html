@@ -7,6 +7,14 @@
     <title>cardzzz - Digital Dream-Cards</title>
   </head>
   <body>
+    <!-- Loading screen - shows immediately before React loads -->
+    <div id="loader-overlay" style="position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, #220020 0%, #560000 100%);">
+      <div style="text-align: center; padding: 1rem;">
+        <h1 id="loader-text" style="font-family: 'Roundo', sans-serif; color: #FFFADC; text-transform: lowercase; font-weight: 500; font-size: 8px; opacity: 1; transition: opacity 0.6s ease-in-out, filter 0.6s ease-in-out;">
+          changing the way love is communicated...
+        </h1>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     

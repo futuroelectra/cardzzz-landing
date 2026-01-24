@@ -16,13 +16,23 @@ function App() {
     setCurrentPage('home')
   }
 
-  // Check sessionStorage on mount
+  // Check sessionStorage on mount and hide HTML loader if needed
   useEffect(() => {
+    // Hide the HTML loader immediately when React loads
+    const htmlLoader = document.getElementById('loader-overlay')
+    if (htmlLoader) {
+      htmlLoader.style.display = 'none'
+    }
+
     if (!sessionStorage.getItem('visited')) {
       setShowLoader(true)
       sessionStorage.setItem('visited', 'true')
     } else {
       setLoaderComplete(true)
+      // Ensure HTML loader is hidden if already visited
+      if (htmlLoader) {
+        htmlLoader.style.display = 'none'
+      }
     }
   }, [])
 

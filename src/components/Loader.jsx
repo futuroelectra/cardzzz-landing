@@ -82,7 +82,7 @@ function Loader({ onComplete }) {
 
   return (
     <motion.div
-      id="loader-overlay"
+      id="react-loader-overlay"
       initial={{ opacity: 1 }}
       animate={isExiting ? { opacity: 0, y: '-100%' } : { opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: 'easeInOut' }}
@@ -99,7 +99,7 @@ function Loader({ onComplete }) {
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, filter: 'blur(10px)' }}
             transition={{ duration: 0.6, ease: 'easeInOut' }}
-            className="font-roundo text-cream lowercase font-medium text-base sm:text-lg md:text-xl"
+            className="font-roundo text-cream lowercase font-medium text-[8px] sm:text-lg md:text-xl"
           >
             {phrases[currentPhrase]}
           </motion.h1>
