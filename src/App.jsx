@@ -31,25 +31,8 @@ function App() {
     setLoaderComplete(true)
   }
 
-  // Show loader on first visit
-  if (showLoader) {
-    return <Loader onComplete={handleLoaderComplete} />
-  }
-
-  // Prevent FOUC - hide content until loader is complete
-  if (!loaderComplete) {
-    return null
-  }
-
-  if (currentPage === 'privacy') {
-    return <PrivacyPolicy onBack={handleBack} />
-  }
-
-  if (currentPage === 'terms') {
-    return <TermsOfService onBack={handleBack} />
-  }
-
-  return (
+  // Render main content in background to prevent white screen
+  const mainContent = (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Background gradient */}
       <div 
@@ -116,6 +99,31 @@ function App() {
       </div>
     </div>
   )
+
+  // Show loader on first visit (overlay on top of pre-rendered content)
+  if (showLoader) {
+    return (
+      <>
+        {mainContent}
+        <Loader onComplete={handleLoaderComplete} />
+      </>
+    )
+  }
+
+  // Prevent FOUC - hide content until loader is complete
+  if (!loaderComplete) {
+    return null
+  }
+
+  if (currentPage === 'privacy') {
+    return <PrivacyPolicy onBack={handleBack} />
+  }
+
+  if (currentPage === 'terms') {
+    return <TermsOfService onBack={handleBack} />
+  }
+
+  return mainContent
 }
 
 export default App

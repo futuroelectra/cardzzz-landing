@@ -28,7 +28,7 @@ function Loader({ onComplete }) {
           return prev
         }
       })
-    }, 1200) // Each phrase shows for ~1.2s, total ~3.6s
+    }, 2000) // Each phrase shows for 2s, total ~6s
 
     return () => clearInterval(phraseInterval)
   }, []) // Remove dependencies to prevent re-runs
@@ -52,7 +52,7 @@ function Loader({ onComplete }) {
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, filter: 'blur(10px)' }}
             transition={{ duration: 0.6, ease: 'easeInOut' }}
-            className="font-roundo text-cream lowercase font-medium text-2xl sm:text-3xl md:text-4xl"
+            className="font-roundo text-cream lowercase font-medium text-xl sm:text-2xl md:text-3xl"
           >
             {phrases[currentPhrase]}
           </motion.h1>
