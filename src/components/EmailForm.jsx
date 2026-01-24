@@ -134,7 +134,7 @@ function EmailForm({ onNavigateToPrivacy, onNavigateToTerms }) {
         transition={{ duration: 0.5 }}
         className="font-roundo text-cream text-xl md:text-2xl py-8"
       >
-        See you in Feb '26!
+        Thank you for joining the waitlist.
       </motion.div>
     )
   }
