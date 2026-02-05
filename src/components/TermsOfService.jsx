@@ -175,7 +175,7 @@ function TermsOfService({ onBack }) {
               <p className="mt-2">
                 <strong>Moli Pty Ltd</strong><br />
                 Cape Town, South Africa<br />
-                Email: <a href="mailto:legal@moli.co.za" className="underline text-cream hover:text-cream/80">legal@moli.co.za</a>
+                Email: <a href="mailto:oli@moli.co.za" className="underline text-cream hover:text-cream/80">oli@moli.co.za</a>
               </p>
             </section>
           </motion.div>

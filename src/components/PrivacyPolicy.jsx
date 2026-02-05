@@ -117,7 +117,7 @@ function PrivacyPolicy({ onBack }) {
                 <li>Withdraw consent</li>
               </ul>
               <p className="mt-3">
-                To exercise these rights, contact us at: <a href="mailto:privacy@moli.co.za" className="underline text-cream hover:text-cream/80">privacy@moli.co.za</a>
+                To exercise these rights, contact us at: <a href="mailto:oli@moli.co.za" className="underline text-cream hover:text-cream/80">oli@moli.co.za</a>
               </p>
             </section>
 
@@ -164,7 +164,7 @@ function PrivacyPolicy({ onBack }) {
               <p className="mt-2">
                 <strong>Moli Pty Ltd</strong><br />
                 Cape Town, South Africa<br />
-                Email: <a href="mailto:privacy@moli.co.za" className="underline text-cream hover:text-cream/80">privacy@moli.co.za</a>
+                Email: <a href="mailto:oli@moli.co.za" className="underline text-cream hover:text-cream/80">oli@moli.co.za</a>
               </p>
             </section>
           </motion.div>

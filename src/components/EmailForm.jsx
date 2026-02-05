@@ -4,7 +4,8 @@ import { motion, useMotionValue, useSpring } from 'framer-motion'
 // SheetDB API endpoint
 // Ensure your Google Sheet has a column named "email" (case-sensitive)
 // Optional: Add a "timestamp" column for tracking submission times
-const API_ENDPOINT = 'https://sheetdb.io/api/v1/a5si29f7xe2n8'
+const API_ENDPOINT = 'https://sheetdb.io/api/v1/jpe3xbwcwqbx0'
+const WEBHOOK_URL = 'https://hook.eu2.make.com/nt5u9en5au7de6xpok1efz9zhhgb2gaj'
 
 function EmailForm({ onNavigateToPrivacy, onNavigateToTerms }) {
   const [email, setEmail] = useState('')
@@ -61,20 +62,35 @@ function EmailForm({ onNavigateToPrivacy, onNavigateToTerms }) {
 
     setIsLoading(true)
     try {
+      const emailData = {
+        email: email.trim().toLowerCase(),
+        timestamp: new Date().toISOString()
+      }
+
+      // Submit to SheetDB
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          email: email.trim().toLowerCase(),
-          timestamp: new Date().toISOString()
-        }),
+        body: JSON.stringify(emailData),
       })
 
       // Log response for debugging
       const responseData = await response.json()
       console.log('SheetDB Response:', responseData)
+
+      // Submit to Make.com webhook (fire and forget - don't wait for response)
+      fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
+      }).catch(error => {
+        console.warn('Webhook submission error (non-critical):', error)
+        // Don't fail the form submission if webhook fails
+      })
 
       if (response.ok) {
         // Check if SheetDB returned success
