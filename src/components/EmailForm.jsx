@@ -5,7 +5,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion'
 // Ensure your Google Sheet has a column named "email" (case-sensitive)
 // Optional: Add a "timestamp" column for tracking submission times
 const API_ENDPOINT = 'https://sheetdb.io/api/v1/jpe3xbwcwqbx0'
-const WEBHOOK_URL = 'https://hook.eu2.make.com/nt5u9en5au7de6xpok1efz9zhhgb2gaj'
+const WEBHOOK_URL = 'https://hook.eu2.make.com/hphsx27xpv9zvhfn7ys3oulv8dpjhc8h'
 
 function EmailForm({ onNavigateToPrivacy, onNavigateToTerms }) {
   const [email, setEmail] = useState('')
