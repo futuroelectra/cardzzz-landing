@@ -61,13 +61,35 @@ function EmailForm({ onNavigateToPrivacy, onNavigateToTerms }) {
     if (!isValid || isLoading) return
 
     setIsLoading(true)
+    const emailData = {
+      email: email.trim().toLowerCase(),
+      timestamp: new Date().toISOString()
+    }
+
     try {
-      const emailData = {
-        email: email.trim().toLowerCase(),
-        timestamp: new Date().toISOString()
+      // 1. Call Make.com webhook FIRST so every submission is captured
+      const webhookPromise = fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(emailData),
+        mode: 'cors',
+      })
+      const webhookTimeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Webhook timeout')), 10000)
+      )
+      try {
+        const webhookResponse = await Promise.race([webhookPromise, webhookTimeout])
+        if (!webhookResponse.ok) {
+          console.warn('Make.com webhook returned:', webhookResponse.status)
+        }
+      } catch (webhookError) {
+        console.warn('Make.com webhook (non-blocking):', webhookError?.message || webhookError)
       }
 
-      // Submit to SheetDB
+      // 2. Submit to SheetDB
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: {
@@ -76,21 +98,8 @@ function EmailForm({ onNavigateToPrivacy, onNavigateToTerms }) {
         body: JSON.stringify(emailData),
       })
 
-      // Log response for debugging
       const responseData = await response.json()
       console.log('SheetDB Response:', responseData)
-
-      // Submit to Make.com webhook (fire and forget - don't wait for response)
-      fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(emailData),
-      }).catch(error => {
-        console.warn('Webhook submission error (non-critical):', error)
-        // Don't fail the form submission if webhook fails
-      })
 
       if (response.ok) {
         // Check if SheetDB returned success
