@@ -78,7 +78,7 @@ function App() {
             <p className="text-lg md:text-xl tagline-text">
               <span className="font-bold text-[18px]">digital dream-cards</span>{' '}
               <span className="font-semibold">✦</span>{' '}
-              <span className="font-satoshi font-normal text-sm tagline-date">Genesis collection is here</span>
+              <span className="font-satoshi font-normal text-sm tagline-date">Genesis Collection</span>
             </p>
           </motion.div>
           
