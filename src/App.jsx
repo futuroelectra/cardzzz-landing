@@ -93,7 +93,7 @@ function App() {
               In a sea of message bubbles and expiring stories, don't let your cutest moments get buried. Send them a link they won't see coming - with a card they'll never forget.
             </p>
             <p className="text-xs sm:text-xs md:text-sm leading-relaxed px-2 sm:px-4 mt-2">
-              <strong style={{ fontSize: '11px' }}>We are currently at capacity. New invite codes are sent every Monday to those at the top of the list.</strong>
+              <strong style={{ fontSize: '10px' }}>We are currently at capacity. New invite codes are sent every Friday to those at the top of the list.</strong>
             </p>
           </motion.div>
           
